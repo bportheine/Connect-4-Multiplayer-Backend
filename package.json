@@ -33,5 +33,7 @@
     "ts-node": "^5.0.1",
     "typeorm": "^0.1.16",
     "typescript": "^2.7.2"
-  }
+  },
+  "repository": "git@github.com:bportheine/Simon-Multiplayer-Backend.git",
+  "author": "ViktorMun <v.mun@yahoo.com>"
 }
