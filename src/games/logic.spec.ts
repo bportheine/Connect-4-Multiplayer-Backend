@@ -7,27 +7,24 @@ describe('calculateWinner()', () => {
 
   it('should work for a horizontal winner', () => {
     const board: Board = [
-      ['x', 'x', 'o'],
-      ['x', 'x', 'x'],
-      [null, 'o', 'o'],
+      ['x', 'x'],
+      ['o', null]
     ]
     equal(calculateWinner(board), 'x')
   })
 
   it('should work for a vertical winner', () => {
     const board: Board = [
-      ['o', 'x', 'o'],
-      ['x', 'x', 'o'],
-      [null, 'o', 'o'],
+      ['o', 'x'],
+      ['x', null]
     ]
     equal(calculateWinner(board), 'o')
   })
 
   it('should work for a diagonal winner [rtl]', () => {
     const board: Board = [
-      ['o', 'x', 'x'],
-      [null, 'x', 'o'],
-      ['x', 'o', 'o'],
+      ['o', 'x'],
+      [null, 'x']
     ]
     equal(calculateWinner(board), 'x')
   })
