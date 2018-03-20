@@ -1,14 +1,11 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne } from 'typeorm'
 import User from '../users/entity'
 
-export type Symbol = 'x' | 'o'
-export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
-export type Board = [ Row, Row, Row ]
+export type PlayerID = '1' | '2'
+
 
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null]
-const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
 
 @Entity()
 export class Game extends BaseEntity {
@@ -16,10 +13,13 @@ export class Game extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column('json', {default: emptyBoard})
-  board: Board
+  @Column('json', {default: []})
+  padsShowed: string[]
 
-  @Column('char', {length:1, default: 'x'})
+  @Column('json', {default: []})
+  padsClicked: string[]
+
+  @Column('char', {length:1, default: '1'})
   turn: Symbol
 
   @Column('char', {length:1, nullable: true})
@@ -35,7 +35,7 @@ export class Game extends BaseEntity {
 }
 
 @Entity()
-@Index(['game', 'user', 'symbol'], {unique:true})
+@Index(['game', 'user', 'playerID'], {unique:true})
 export class Player extends BaseEntity {
 
   @PrimaryGeneratedColumn()
@@ -47,9 +47,9 @@ export class Player extends BaseEntity {
   @ManyToOne(_ => Game, game => game.players)
   game: Game
 
-  //@Column()
-  //userId: number
+  @Column()
+  userId: number
 
   @Column('char', {length: 1})
-  symbol: Symbol
+  playerID: Symbol
 }
