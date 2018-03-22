@@ -4,7 +4,21 @@ import { calculateWinner, isValidTransition, finished } from './logic'
 import { Board } from './entities'
 
 describe('calculateWinner()', () => {
+  it('should work', () => {
+    const board: Board = [
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      ['x', null, null, null, null, null, null],
+      ['x', null, null, null, null, null, null],
+      ['x', null, null, 'o', null, null, null],
+      ['x', null, 'o', 'o', null, null, null]
+    ]
+    equal(calculateWinner(board), 'x')
+  })
+})
 
+/*
   it('should work for a horizontal winner', () => {
     const board: Board = [
       ['x', 'x'],
@@ -150,3 +164,4 @@ describe('finished()', () => {
     equal(finished(board), false)
   })
 })
+*/
