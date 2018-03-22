@@ -5,6 +5,7 @@
   "license": "private",
   "scripts": {
     "start": "node .",
+    "dev": "nodemon .",
     "test": "node_modules/.bin/mocha --require ts-node/register src/**/*.spec.ts",
     "watch": "node_modules/.bin/tsc -w",
     "compile": "node_modules/.bin/tsc -p ."

@@ -6,9 +6,9 @@ export class IsBoard implements ValidatorConstraintInterface {
 
   validate(board: Board) {
     const symbols = [ 'x', 'o', null ]
-    return board.length === 3 &&
+    return board.length === 7 &&
       board.every(row =>
-        row.length === 3 &&
+        row.length === 7 &&
         row.every(symbol => symbols.includes(symbol))
       )
   }
@@ -18,15 +18,15 @@ export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) 
   const changes = from
     .map(
       (row, rowIndex) => row.map((symbol, columnIndex) => ({
-        from: symbol, 
+        from: symbol,
         to: to[rowIndex][columnIndex]
       }))
     )
     .reduce((a,b) => a.concat(b))
     .filter(change => change.from !== change.to)
 
-  return changes.length === 1 && 
-    changes[0].to === playerSymbol && 
+  return changes.length === 1 &&
+    changes[0].to === playerSymbol &&
     changes[0].from === null
 }
 
@@ -34,17 +34,19 @@ export const calculateWinner = (board: Board): Symbol | null =>
   board
     .concat(
       // vertical winner
-      [0, 1, 2].map(n => board.map(row => row[n])) as Row[]
+      [0, 1, 2, 3, 4, 5, 6].map(n => board.map(row => row[n])) as Row[]
     )
+    /*
     .concat(
       [
         // diagonal winner ltr
-        [0, 1, 2].map(n => board[n][n]),
+        [0, 1, 2, 3, 4, 5, 6].map(n => board[n][n]),
         // diagonal winner rtl
-        [0, 1, 2].map(n => board[2-n][n])
+        [0, 1, 2, 3, 4, 5, 6].map(n => board[3-n][n])
       ] as Row[]
     )
-    .filter(row => row[0] && row.every(symbol => symbol === row[0]))
+    */
+    .filter(row => row[0] && row.join().includes('x,x,x,x') || row.join().includes('o,o,o,o'))
     .map(row => row[0])[0] || null
 
 export const finished = (board: Board): boolean =>
