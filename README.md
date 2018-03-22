@@ -1,6 +1,6 @@
-# Tic Tac Toe Server
+# Connect 4 Server
 
-This is a server for playing a multiplayer Tic Tac Toe game. 
+This is a server for playing a multiplayer Connect 4 game.
 
 It has these endpoints:
 
@@ -14,9 +14,9 @@ It has these endpoints:
 
 ## Running
 
-* You need a working Postgres database that is preferrably empty (drop all the tables) and running 
+* You need a working Postgres database that is preferrably empty (drop all the tables) and running
 * Install the dependencies using `yarn install`
 * Compile the app (Typescript > Javascript) using `yarn compile` (during development you can use `yarn watch`)
 * `yarn start`
 
-You can run the tests with `yarn test`. Currently they only cover the game logic. 
+You can run the tests with `yarn test`. Currently they only cover the game logic.
