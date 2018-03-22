@@ -1,10 +1,10 @@
-import { 
-  JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get, 
-  Body, Patch 
+import {
+  JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, ForbiddenError, Get,
+  Body, Patch
 } from 'routing-controllers'
 import User from '../users/entity'
 import { Game, Player, Board } from './entities'
-import {IsBoard, isValidTransition, calculateWinner, finished} from './logic'
+import {IsBoard, isValidTransition, calculateWinnerHorizontal, calculateWinnerVertical, finished} from './logic'
 import { Validate } from 'class-validator'
 import {io} from '../index'
 
@@ -28,7 +28,7 @@ export default class GameController {
     const entity = await Game.create().save()
 
     await Player.create({
-      game: entity, 
+      game: entity,
       user,
       symbol: 'x'
     }).save()
@@ -58,7 +58,7 @@ export default class GameController {
     await game.save()
 
     const player = await Player.create({
-      game, 
+      game,
       user,
       symbol: 'o'
     }).save()
@@ -91,9 +91,9 @@ export default class GameController {
     if (player.symbol !== game.turn) throw new BadRequestError(`It's not your turn`)
     if (!isValidTransition(player.symbol, game.board, update.board)) {
       throw new BadRequestError(`Invalid move`)
-    }    
+    }
 
-    const winner = calculateWinner(update.board)
+    const winner = calculateWinnerHorizontal(update.board) || calculateWinnerVertical(update.board)
     if (winner) {
       game.winner = winner
       game.status = 'finished'
@@ -106,7 +106,7 @@ export default class GameController {
     }
     game.board = update.board
     await game.save()
-    
+
     io.emit('action', {
       type: 'UPDATE_GAME',
       payload: game
@@ -129,4 +129,3 @@ export default class GameController {
     return Game.find()
   }
 }
-

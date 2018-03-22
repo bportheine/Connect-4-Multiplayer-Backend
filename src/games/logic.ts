@@ -30,24 +30,15 @@ export const isValidTransition = (playerSymbol: Symbol, from: Board, to: Board) 
     changes[0].from === null
 }
 
-export const calculateWinner = (board: Board): Symbol | null =>
+export const calculateWinnerHorizontal = (board: Board): Symbol | null =>
   board
-    .concat(
-      // vertical winner
-      [0, 1, 2, 3, 4, 5, 6].map(n => board.map(row => row[n])) as Row[]
-    )
-    /*
-    .concat(
-      [
-        // diagonal winner ltr
-        [0, 1, 2, 3, 4, 5, 6].map(n => board[n][n]),
-        // diagonal winner rtl
-        [0, 1, 2, 3, 4, 5, 6].map(n => board[3-n][n])
-      ] as Row[]
-    )
-    */
     .filter(row => row[0] && row.join().includes('x,x,x,x') || row.join().includes('o,o,o,o'))
     .map(row => row[0])[0] || null
+
+export const calculateWinnerVertical = (board: Board): Symbol | null =>
+  {var name=board[0].map((col, i) => board.map(row => row[i]))
+    .filter(row => row[0] && true|| row.join().includes('x,x,x,x') || row.join().includes('o,o,o,o'))
+  return name.map(row => row[3])[0] || null}
 
 export const finished = (board: Board): boolean =>
   board
